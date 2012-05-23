@@ -1,0 +1,4 @@
+.lein*
+lib
+public/*.js
+target/
