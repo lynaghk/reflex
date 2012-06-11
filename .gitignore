@@ -1,4 +1,4 @@
 .lein*
 lib
-public/*.js
+out/
 target/
