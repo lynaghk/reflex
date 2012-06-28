@@ -1,4 +1,4 @@
-(defproject com.keminglabs/reflex "0.1.0-SNAPSHOT"
+(defproject com.keminglabs/reflex "0.1.0"
   :description "ClojureScript state propagation."
   :license {:name "BSD" :url "http://www.opensource.org/licenses/BSD-3-Clause"}
 
@@ -16,5 +16,4 @@
                                          :pretty-print true}}}
 
               :test-commands {"integration" ["phantomjs"
-                                             "test/integration/runner.coffee"]}
-              })
+                                             "test/integration/runner.coffee"]}})
