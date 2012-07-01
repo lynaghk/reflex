@@ -70,3 +70,9 @@
 
     ;;is this necessary for GC?
     (set! (.-watches this) nil)))
+
+
+(extend-type ComputedObservable
+  IHash
+  (-hash [this] (.-key this)))
+
