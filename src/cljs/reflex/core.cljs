@@ -1,18 +1,17 @@
 (ns reflex.core
   (:use-macros [reflex.macros :only [capture-derefed]]))
 
-(def !recently-derefed
-  (atom #{} :meta {:no-deref-monitor true}))
+(declare ^:dynamic !recently-derefed)
+
+(defn capture-derefed [f]
+  (binding [!recently-derefed (atom #{} :meta {:no-deref-monitor true})]
+    (let [res (f)]
+      {:res res :derefed @!recently-derefed})))
 
 (defn notify-deref-watcher! [derefable]
-  (when-not (:no-deref-monitor (meta derefable))
+  (when (and !recently-derefed
+             (not (:no-deref-monitor (meta derefable))))
     (swap! !recently-derefed #(conj % derefable))))
-
-(defn reset-deref-watcher! []
-  (reset! !recently-derefed #{}))
-
-(defn recently-derefed []
-  @!recently-derefed)
 
 ;;Have atoms make a note when they're dereferenced.
 (extend-type Atom
@@ -42,15 +41,15 @@
     (notify-deref-watcher! this)
     (if-not dirty?
       (.-state this)
-      (let [{:keys [res derefed]} (capture-derefed (f))]
+      (let [{:keys [res derefed]} (capture-derefed f)]
         ;;Update watches on parent atoms.
         ;;This is necessary on each deref because the CO fn is arbitrary and can reference different atoms.
         ;;E.g., (if @a (... @b) (... @c))
         (doseq [w parent-watchables]
           (remove-watch w key))
-        
+
         (set! (.-parent-watchables this) derefed)
-        
+
         (doseq [w derefed]
           (add-watch w key (fn []
                              (set! (.-dirty? this) true)
@@ -60,7 +59,7 @@
         ;;Update state
         (set! (.-state this) res)
         (set! (.-dirty? this) false)
-        
+
         ;;Return newly calculated state.
         res)))
 
