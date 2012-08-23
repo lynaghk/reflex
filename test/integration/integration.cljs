@@ -1,7 +1,7 @@
 (ns test.integration.integration
   (:use-macros [reflex.macros :only [computed-observable constrain!]])
-  (:require [reflex.core :as [reflex]]) ;;need to explicitly require since macros reference this ns
-  )
+  ;;need to explicitly require since macros reference this ns
+  (:require [reflex.core :as reflex]))
 
 
 (let [!counter (atom 0)
