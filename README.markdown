@@ -16,7 +16,7 @@ COs are lazily evaluated, computing state only when they are dereferenced---they
 
 To use from ClojureScript add this to your `project.clj`:
 
-    [com.keminglabs/reflex "0.1.0"]
+    [com.keminglabs/reflex "0.1.1"]
 
 
 Implementation
