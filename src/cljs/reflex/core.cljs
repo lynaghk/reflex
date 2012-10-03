@@ -5,7 +5,7 @@
 
 (defn capture-derefed [f]
   (binding [!recently-derefed (atom #{} :meta {:no-deref-monitor true})]
-    (let [res (f)]
+    (let [res (doall (f))]
       {:res res :derefed @!recently-derefed})))
 
 (defn notify-deref-watcher! [derefable]

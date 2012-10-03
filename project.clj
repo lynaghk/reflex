@@ -1,4 +1,4 @@
-(defproject com.keminglabs/reflex "0.1.1"
+(defproject com.keminglabs/reflex "0.1.2-SNAPSHOT"
   :description "ClojureScript state propagation."
   :license {:name "BSD" :url "http://www.opensource.org/licenses/BSD-3-Clause"}
 
