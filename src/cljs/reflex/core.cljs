@@ -1,5 +1,4 @@
-(ns reflex.core
-  (:use-macros [reflex.macros :only [capture-derefed]]))
+(ns reflex.core)
 
 (declare ^:dynamic !recently-derefed)
 
